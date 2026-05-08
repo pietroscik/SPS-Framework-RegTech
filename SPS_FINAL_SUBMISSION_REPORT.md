@@ -66,3 +66,5 @@ The framework covers the entire temporal spectrum required by supervision:
 The SPS framework demonstrates statistical robustness and operational relevance. The strategic separation between **diagnosis (V2)** and **production (Master)** ensures methodological transparency, while the hybrid temporal architecture offers Supervisory Authorities a complete predictive tool, capable of transitioning from real-time monitoring to annual strategic planning.
 
 **Status:** ✅ READY FOR DEPLOYMENT
+
+© 2026 Pietro Maietta. Tutti i diritti riservati. Documentazione tecnica depositata presso Canale Fintech - Banca d'Italia (Rif. Invio Maggio 2026).
