@@ -158,3 +158,5 @@ This framework addresses the supervisory challenge of prioritising oversight acr
 - Network and SPS metrics are implemented in a research‑grade Python stack; production‑grade scalability on very large graphs would require further engineering and optimisation.
 - The current implementation does not yet include full explainable‑AI tooling (e.g. SHAP) on top of SPS, which is an obvious next step for supervisory adoption.
 - Future extensions include integrating fraud/AML features, richer spatial metrics, and benchmarking against alternative prioritisation strategies (e.g. volume‑based or rule‑based baselines).
+
+© 2026 Pietro Maietta. Tutti i diritti riservati. Documentazione tecnica depositata presso Canale Fintech - Banca d'Italia (Rif. Invio Maggio 2026).
