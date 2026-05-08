@@ -1,0 +1,160 @@
+# SPS Research Framework: Supervisory Prioritisation Score
+## Innovation Data Challenge – Fintech & Retail Payments
+**Author:** Pietro Maietta – University of Naples “Parthenope”
+
+### 🎯 Research Objective
+Develop an adaptive, data‑driven supervisory framework capable of identifying both **stability/resilience risks** and **inclusion/exclusion risks** in retail payment systems.
+The project evolves from simple monitoring to an **evolutionary model** that simulates emerging crisis scenarios.
+
+---
+
+### 🧬 Three‑Stage Methodology + Vigilance Matrix
+
+The project goes beyond static analysis and applies three progressive validation stages:
+
+#### 1. [V1] Baseline Deterministic (Logic Check)
+*   **Goal:** Logical validation of the SPS algorithm.
+*   **Method:** Use of mock data with hard‑coded rules (e.g. “If Region = South → Error”).
+*   **Result:** Check that the algorithm correctly identifies known patterns.
+
+#### 2. [V2] Stochastic Scenario (Stress Test)
+*   **Goal:** Robustness analysis in complex scenarios.
+*   **Method:**
+    *   **Network:** Generate a scale‑free network (Barabási–Albert) to simulate real systemic hubs.
+    *   **Behaviour:** Probabilistic transition matrices for user segments.
+    *   **Stress:** “Cascading failure” simulations on critical nodes.
+
+#### 3. [V3] Evolutionary Frontier (AutoML)
+*   **Goal:** Surface structural biases and optimise parameters.
+*   **Method:**
+    *   **Genetic Algorithm:** Simulates optimal allocation of scarce resources (server capacity) under a global budget constraint.
+    *   **Emergence:** Errors are not scripted; they emerge where stochastic demand exceeds optimised capacity (congestion).
+    *   **AutoML:** Automatic optimisation of weights $\alpha$ (Technical) and $\beta$ (Social) to maximise predictive power.
+
+#### 4. Supervisory Prioritisation Matrix
+*   **Key idea:** SPS is not used as a single scalar index, but to position each PSP in a **4‑quadrant Supervisory Prioritisation Matrix**, combining:
+    *   **X‑axis – Structure (V2):** topological centrality / `ncr_score` (Network Contagion Risk).
+    *   **Y‑axis – Stress (V3):** operational risk / `sps_score` (congestion, latency, ADZ).
+*   **Operational quadrants (column `vigilance_action`):**
+    *   `PRIORITY_1_DORA_INSPECTION` – Systemic hubs under high stress (Critical Hub Failure).
+    *   `PRIORITY_2_SYSTEMIC_WATCHLIST` – Central but stable hubs, subject to periodic stress testing.
+    *   `PRIORITY_3_INCLUSION_AUDIT` – Peripheral nodes in Active Denial Zones / high exclusion risk.
+    *   `STANDARD_REPORTING` – Ordinary operations (standard reporting).
+*   **Final output:** for each scenario (V1/V2/V3), the file `final_scored_transactions.csv` contains the SPS and the corresponding supervisory strategy for each PSP/context.
+
+---
+
+### 📂 Project Structure
+
+```text
+challenge fintec/
+├── run_pipeline.py                 # MASTER ORCHESTRATOR (single entry point)
+├── 03_PROJECT_CODE/
+│   ├── src/                        # Source code
+│   │   ├── gen_v1... / v2... / v3...   # Data generators (Mock, Stochastic, Genetic)
+│   │   ├── calc_sps_core.py            # Unified SPS computation engine
+│   │   ├── vis_v2... / vis_v3...       # Visual dashboards
+│   │   └── automl_optimizer.py         # Genetic optimiser for SPS weights
+│   ├── data/                       # Versioned data lake
+│   │   ├── v1_mock/                # Scenario [V1] Baseline Deterministic
+│   │   ├── v2_stochastic/          # Scenario [V2] Stochastic & Stress Test
+│   │   └── v3_genetic/             # Scenario [V3] Evolutionary Genetic + AutoML
+│   │       (each folder contains D01–D10,
+│   │        `final_scored_transactions.csv` with SPS and
+│   │        `vigilance_action`, plus `summary_metrics.md`
+│   │        with key aggregated metrics)
+│   └── output_graphs/              # Versioned graphical outputs
+│       ├── v1/
+│       ├── v2/
+│       └── v3/
+└── 05_FINAL_SUBMISSION/            # Final documents for submission
+```
+
+---
+
+### 📚 Where to Find What
+
+- **Source code & pipeline**
+  - `03_PROJECT_CODE/src/` – V1/V2/V3 data generators, SPS engine (`calc_sps_core.py`), dashboards, AutoML module (`automl_optimizer.py`), helper scripts.
+  - `run_pipeline.py` – main orchestrator (single entry point).
+- **Data & numerical results**
+  - `03_PROJECT_CODE/data/v1_mock|v2_stochastic|v3_genetic/` – D01–D10 datasets for each scenario, `final_scored_transactions.csv` with SPS and `vigilance_action`, and `summary_metrics.md` with a numerical synthesis of the key metrics.
+- **Charts & dashboards**
+  - `03_PROJECT_CODE/output_graphs/v1|v2|v3/` – PNGs, dashboards and flowcharts for each scenario.
+- **Methodology and strategy papers**
+  - `04_STRATEGY_PAPERS/` – methodological description (V1–V3, Vigilance Matrix, V4.0 framework, etc.).
+- **Submission material**
+  - `05_FINAL_SUBMISSION/` – final documents for submission (including the Word proposal generated by `create_word_proposal.py`).
+
+---
+
+### 🚀 Quick Start
+
+The project is entirely managed through the orchestrator.
+
+0.  **(Optional but recommended) Create a virtual environment:**
+    ```bash
+    python -m venv .venv
+    source .venv/bin/activate
+    pip install -r 03_PROJECT_CODE/requirements.txt
+    ```
+
+1.  **Run the pipeline:**
+    ```bash
+    python run_pipeline.py
+    ```
+
+2.  **Interactive menu:**
+    The system shows a menu to select the research stage:
+    ```text
+    1. [V1] BASELINE: Mock Data
+    2. [V2] ADVANCED: Stochastic Data & Stress Test
+    3. [V3] FRONTIER: Evolutionary Data & AutoML
+    ```
+
+3.  **Output:**
+    - The final datasets, with SPS and Vigilance Matrix, are saved in:
+      - `03_PROJECT_CODE/data/v1_mock/final_scored_transactions.csv`
+      - `03_PROJECT_CODE/data/v2_stochastic/final_scored_transactions.csv`
+      - `03_PROJECT_CODE/data/v3_genetic/final_scored_transactions.csv`
+    - In each `vX_*` folder there is also a
+      `summary_metrics.md` file summarising:
+      - dataset size and failure rate;
+      - share of transactions in ADZ;
+      - percentage distribution of `vigilance_action` quadrants;
+      - summary distributions of `ncr_score` and `sps_score`.
+    - Visualisations (PNG charts, dashboards) are saved in the
+      corresponding `03_PROJECT_CODE/output_graphs/vX` folders.
+
+4.  **AutoML (Stage V3):**
+    - At the end of Stage V3, the orchestrator asks whether to run SPS weight optimisation (AutoML module).
+    - If you answer `y`, it runs `03_PROJECT_CODE/src/automl_optimizer.py`,
+      which uses the dataset
+      `03_PROJECT_CODE/data/v3_genetic/final_scored_transactions.csv`
+      produced by `calc_sps_core.py` to calibrate the weights $(\alpha, \beta)$.
+
+---
+
+### 💡 Key Findings (Scientific Results)
+
+*   **Network Analysis:** Using *betweenness centrality* reveals critical nodes (“hidden bridges”) that are invisible to traditional volume‑based (Tier) analysis.
+*   **Bias Emergence:** In the genetic model (V3), the predominant risk that emerges is **congestion** (technical risk), suggesting that in an efficient market geographic exclusion tends to shrink, while systemic fragility to demand spikes increases.
+*   **Policy Tuning:** AutoML suggests recalibrating SPS weights towards a predominance of the technical component ($\alpha \approx 0.85$) to maximise crash prevention.
+*   **Vigilance Matrix:** the 4‑quadrant classification clearly separates **systemic risk** (critical hubs to inspect ex‑ante under DORA) and **social risk** (peripheral PSPs in ADZ that require inclusion policies), turning the framework from a mere scoring model into an operational supervisory tool.
+
+> Terminology note: in the strategy papers the label “V4” refers to the **overall SPS framework version** (methodological release 4.0), not to a fourth operational stage beyond V1/V2/V3.
+
+---
+
+### 🧩 Problem & Use Case
+
+This framework addresses the supervisory challenge of prioritising oversight across a large population of Payment Service Providers (PSPs). By combining structural (network) risk and operational (congestion/ADZ) risk into a single Vigilance Matrix, it helps central banks and supervisors decide where to: (i) run ex‑ante DORA inspections, (ii) place entities on a systemic watchlist, and (iii) target financial inclusion audits. The same pipeline can be re‑run under alternative scenarios to support stress‑testing exercises and policy design.
+
+---
+
+### 🔭 Limitations & Future Work
+
+- Current experiments are based on synthetic data; calibration and validation on real supervisory datasets is left for future work.
+- Network and SPS metrics are implemented in a research‑grade Python stack; production‑grade scalability on very large graphs would require further engineering and optimisation.
+- The current implementation does not yet include full explainable‑AI tooling (e.g. SHAP) on top of SPS, which is an obvious next step for supervisory adoption.
+- Future extensions include integrating fraud/AML features, richer spatial metrics, and benchmarking against alternative prioritisation strategies (e.g. volume‑based or rule‑based baselines).
